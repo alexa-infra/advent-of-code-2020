@@ -1,25 +1,25 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
-	"strings"
+	"fmt"
+	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
-type Map map[string]string
+type passMap map[string]string
 
 var (
-	yearRegexp = regexp.MustCompile(`^(\d{4})$`)
-	heightRegexp = regexp.MustCompile(`^(\d+)(cm|in)$`)
-	colorRegexp = regexp.MustCompile(`^#[0-9a-f]{6}$`)
+	yearRegexp     = regexp.MustCompile(`^(\d{4})$`)
+	heightRegexp   = regexp.MustCompile(`^(\d+)(cm|in)$`)
+	colorRegexp    = regexp.MustCompile(`^#[0-9a-f]{6}$`)
 	eyeColorRegexp = regexp.MustCompile(`^(amb|blu|brn|gry|grn|hzl|oth)$`)
-	pidRegexp = regexp.MustCompile(`^\d{9}$`)
+	pidRegexp      = regexp.MustCompile(`^\d{9}$`)
 )
 
-func validateSimple(pass Map) bool {
+func validateSimple(pass passMap) bool {
 	for k, v := range pass {
 		if v == "" && k != "cid" {
 			return false
@@ -28,7 +28,7 @@ func validateSimple(pass Map) bool {
 	return true
 }
 
-func validateComplex(pass Map) bool {
+func validateComplex(pass passMap) bool {
 	if pass["byr"] == "" || !yearRegexp.MatchString(pass["byr"]) {
 		return false
 	}
@@ -74,23 +74,22 @@ func validateComplex(pass Map) bool {
 }
 
 func main() {
-        scanner := bufio.NewScanner(os.Stdin)
+	scanner := bufio.NewScanner(os.Stdin)
 
-	pass := Map{ "byr": "", "iyr": "", "eyr": "", "hgt": "", "hcl": "", "ecl": "", "pid": "", "cid": "" }
+	pass := passMap{"byr": "", "iyr": "", "eyr": "", "hgt": "", "hcl": "", "ecl": "", "pid": "", "cid": ""}
 	n1 := 0
 	n2 := 0
 
-
-        for scanner.Scan() {
+	for scanner.Scan() {
 		line := scanner.Text()
 		if len(line) == 0 {
 			if validateSimple(pass) {
-				n1 += 1
+				n1++
 			}
 			if validateComplex(pass) {
-				n2 += 1
+				n2++
 			}
-			for k, _ := range pass {
+			for k := range pass {
 				pass[k] = ""
 			}
 		} else {
@@ -103,10 +102,10 @@ func main() {
 		}
 	}
 	if validateSimple(pass) {
-		n1 += 1
+		n1++
 	}
 	if validateComplex(pass) {
-		n2 += 1
+		n2++
 	}
 	fmt.Println("Part 1:", n1)
 	fmt.Println("Part 2:", n2)

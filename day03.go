@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
+	"os"
 )
 
 func runSlope(lines []string, dx, dy int) int {
@@ -15,21 +15,21 @@ func runSlope(lines []string, dx, dy int) int {
 			continue
 		}
 		length := len(line)
-		xpos_mod := xpos % length
-		if line[xpos_mod] == '#' {
-			n += 1
+		xposMod := xpos % length
+		if line[xposMod] == '#' {
+			n++
 		}
 		xpos += dx
 		ypos += dy
-        }
+	}
 	return n
 }
 
 func main() {
 	lines := []string{}
 
-        scanner := bufio.NewScanner(os.Stdin)
-        for scanner.Scan() {
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
 
@@ -40,5 +40,5 @@ func main() {
 	n3 := runSlope(lines, 5, 1)
 	n4 := runSlope(lines, 7, 1)
 	n5 := runSlope(lines, 1, 2)
-	fmt.Println("Part 2:", n1 * n2 * n3 * n4 * n5)
+	fmt.Println("Part 2:", n1*n2*n3*n4*n5)
 }

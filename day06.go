@@ -1,9 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
-	"bufio"
 )
 
 func main() {
@@ -12,8 +12,8 @@ func main() {
 	ans := map[string]int{}
 	b := map[string]int{}
 	i := 0
-        scanner := bufio.NewScanner(os.Stdin)
-        for scanner.Scan() {
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
 		text := scanner.Text()
 		if text == "" {
 			n1 += len(ans)
@@ -37,9 +37,9 @@ func main() {
 					delete(b, k)
 				}
 			}
-			i += 1
+			i++
 		}
-        }
+	}
 	n1 += len(ans)
 	n2 += len(b)
 	fmt.Println("Part 1:", n1)

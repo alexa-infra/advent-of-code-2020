@@ -1,75 +1,73 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
 
-type Bag struct {
+type bag struct {
 	Name     string
-	Cargo    []*Cargo
-	InsideOf []*Bag
+	Cargo    []*cargoBag
+	InsideOf []*bag
 }
 
-type Cargo struct {
-	Bag   *Bag
+type cargoBag struct {
+	Bag   *bag
 	Count int
 }
 
 func main() {
-	nodes := map[string]*Bag{}
+	nodes := map[string]*bag{}
 
-	lines := []string{}
-        scanner := bufio.NewScanner(os.Stdin)
+	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		text := scanner.Text()
-		lines = append(lines, text)
 
 		parts := strings.Split(text, " bags contain ")
 		name := parts[0]
-		nodes[name] = &Bag{ Name: name }
-	}
 
-	for _, line := range lines {
-		parts := strings.Split(line, " bags contain ")
-		name := parts[0]
-		node, _ := nodes[name]
+		node, ok := nodes[name]
+		if !ok {
+			node = &bag{Name: name}
+			nodes[name] = node
+		}
 
 		cargo := strings.TrimRight(parts[1], ".")
 		if cargo != "no other bags" {
-			cargo_parts := strings.Split(cargo, ", ")
-			for _, cp := range cargo_parts {
-				names := strings.Split(cp, " ")
+			cargoParts := strings.Split(cargo, ", ")
+			for _, cargoPart := range cargoParts {
+				names := strings.Split(cargoPart, " ")
 				n, _ := strconv.Atoi(names[0])
-				name1 := strings.Join(names[1:len(names)-1], " ")
+				cargoName := strings.Join(names[1:len(names)-1], " ")
 
-				node1, ok := nodes[name1]
+				cargoNode, ok := nodes[cargoName]
 				if !ok {
-					nodes[name1] = &Bag{ Name: name1 }
+					cargoNode = &bag{Name: cargoName}
+					nodes[cargoName] = cargoNode
 				}
-				node.Cargo = append(node.Cargo, &Cargo{
+				node.Cargo = append(node.Cargo, &cargoBag{
 					Count: n,
-					Bag: node1,
+					Bag:   cargoNode,
 				})
 			}
 		}
 	}
 
 	for _, node := range nodes {
-		for _, another_node := range nodes {
-			for _, cargo := range another_node.Cargo {
+		for _, anotherNode := range nodes {
+			for _, cargo := range anotherNode.Cargo {
 				if node == cargo.Bag {
-					node.InsideOf = append(node.InsideOf, another_node)
+					node.InsideOf = append(node.InsideOf, anotherNode)
 				}
 			}
 		}
 	}
-	shiny_gold, _ := nodes["shiny gold"]
-	unique := map[string]*Bag{ "shiny gold": shiny_gold }
-	toprocess := []*Bag{ shiny_gold }
+	shinyGold, _ := nodes["shiny gold"]
+	unique := map[string]*bag{"shiny gold": shinyGold}
+	toprocess := []*bag{shinyGold}
 	for len(toprocess) > 0 {
 		node := toprocess[0]
 		toprocess = toprocess[1:]
@@ -82,19 +80,19 @@ func main() {
 			toprocess = append(toprocess, pnode)
 		}
 	}
-	n1 := len(unique)-1
+	n1 := len(unique) - 1
 	fmt.Println("Part 1:", n1)
 
 	n2 := 0
-	next := []*Cargo { &Cargo{ Bag: shiny_gold, Count: 1} }
+	next := []*cargoBag{&cargoBag{Bag: shinyGold, Count: 1}}
 	for len(next) > 0 {
 		node := next[0]
 		next = next[1:]
 		n2 += node.Count
 		for _, cargo := range node.Bag.Cargo {
-			next = append(next, &Cargo{ Bag: cargo.Bag, Count: cargo.Count * node.Count })
+			next = append(next, &cargoBag{Bag: cargo.Bag, Count: cargo.Count * node.Count})
 		}
 	}
-	n2 -= 1
+	n2--
 	fmt.Println("Part 2:", n2)
 }
