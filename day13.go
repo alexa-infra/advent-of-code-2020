@@ -4,8 +4,8 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -22,17 +22,17 @@ func main() {
 		if bus == "x" {
 			continue
 		}
-		busId, _ := strconv.Atoi(bus)
-		wait := busId - (time % busId)
+		busID, _ := strconv.Atoi(bus)
+		wait := busID - (time % busID)
 		if minBus == 0 || wait < minWait {
 			minWait = wait
-			minBus = busId
+			minBus = busID
 		}
 	}
 	n1 := minBus * minWait
 	fmt.Println("Part 1:", n1)
 
-	// each bus goes in (busId * i)
+	// each bus goes in (busID * i)
 	// bus with offet should go in (t + offset) = (busN * i)
 	// in the same time (as above), offset = busN - t % busN
 	//
@@ -62,7 +62,7 @@ func main() {
 			if diff < 0 {
 				diff += bus64
 			}
-			for acc % bus64 != diff {
+			for acc%bus64 != diff {
 				acc += lcm
 			}
 		}
@@ -70,4 +70,3 @@ func main() {
 	}
 	fmt.Println("Part 2:", acc)
 }
-

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"os"
 	"bufio"
-	"strconv"
 	"fmt"
+	"os"
+	"strconv"
 )
 
 func checkXMAS(list []int, value int) bool {
@@ -18,12 +18,12 @@ func checkXMAS(list []int, value int) bool {
 			max = x
 		}
 	}
-	if value < min * 2 || value > max * 2 {
+	if value < min*2 || value > max*2 {
 		return false
 	}
 	for i, x := range list {
 		for j, y := range list {
-			if i != j && x + y == value {
+			if i != j && x+y == value {
 				return true
 			}
 		}
@@ -72,7 +72,7 @@ func main() {
 				max = y
 			}
 			if s == n1 {
-				fmt.Println("Part 2:", min + max)
+				fmt.Println("Part 2:", min+max)
 				return
 			}
 			if s > n1 {

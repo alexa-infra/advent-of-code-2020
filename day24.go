@@ -32,18 +32,24 @@ type Pos struct {
 func move(pos Pos, dir string) Pos {
 	x, y, z := pos.x, pos.y, pos.z
 	switch dir {
-	case "e":  return Pos{ x - 1, y,     z + 1 }
-	case "w":  return Pos{ x + 1, y,     z - 1 }
-	case "ne": return Pos{ x - 1, y + 1, z     }
-	case "sw": return Pos{ x + 1, y - 1, z     }
-	case "se": return Pos{ x,     y - 1, z + 1 }
-	case "nw": return Pos{ x,     y + 1, z - 1 }
+	case "e":
+		return Pos{x - 1, y, z + 1}
+	case "w":
+		return Pos{x + 1, y, z - 1}
+	case "ne":
+		return Pos{x - 1, y + 1, z}
+	case "sw":
+		return Pos{x + 1, y - 1, z}
+	case "se":
+		return Pos{x, y - 1, z + 1}
+	case "nw":
+		return Pos{x, y + 1, z - 1}
 	}
 	panic("unknown direction")
 }
 
 func movePath(path []string, cells map[Pos]int) {
-	pos := Pos{ 0, 0, 0 }
+	pos := Pos{0, 0, 0}
 	for _, dir := range path {
 		pos = move(pos, dir)
 	}
@@ -65,7 +71,7 @@ func getNeighbor(pos Pos, dir string, cells map[Pos]int) int {
 }
 
 func allNeighbors(pos Pos) []Pos {
-	directions := []string{ "e", "w", "ne", "se", "nw", "sw" }
+	directions := []string{"e", "w", "ne", "se", "nw", "sw"}
 	neighbors := []Pos{}
 	for _, dir := range directions {
 		p := move(pos, dir)

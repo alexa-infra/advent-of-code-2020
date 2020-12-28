@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
 	"bufio"
 	"fmt"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -30,7 +30,7 @@ func main() {
 		for i := a1; i <= b1; i++ {
 			arr, ok := props[i]
 			if !ok {
-				props[i] = []*string { &name }
+				props[i] = []*string{&name}
 			} else {
 				props[i] = append(arr, &name)
 			}
@@ -38,7 +38,7 @@ func main() {
 		for i := a2; i <= b2; i++ {
 			arr, ok := props[i]
 			if !ok {
-				props[i] = []*string { &name }
+				props[i] = []*string{&name}
 			} else {
 				props[i] = append(arr, &name)
 			}
@@ -90,7 +90,7 @@ func main() {
 	//validTickets = append(validTickets, myTicket)
 
 	tt := map[int][]string{}
-	for i, _ := range myTicket {
+	for i := range myTicket {
 		unique := map[string]int{}
 		for _, t := range validTickets {
 			value := t[i]
@@ -107,7 +107,7 @@ func main() {
 						mm[*m] = 1
 					}
 				}
-				for k, _ := range unique {
+				for k := range unique {
 					_, ok := mm[k]
 					if !ok {
 						delete(unique, k)
@@ -116,7 +116,7 @@ func main() {
 			}
 		}
 		arr := []string{}
-		for k, _ := range unique {
+		for k := range unique {
 			arr = append(arr, k)
 		}
 		tt[i] = arr

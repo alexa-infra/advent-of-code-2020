@@ -1,12 +1,12 @@
 package main
 
 import (
-	"strconv"
 	"fmt"
+	"strconv"
 )
 
 func main() {
-	const input = "523764819";
+	const input = "523764819"
 	ids := []int{}
 	for _, ch := range input {
 		n, _ := strconv.Atoi(string(ch))
@@ -14,9 +14,9 @@ func main() {
 	}
 	state := map[int]int{}
 	for i := 1; i < len(ids); i++ {
-		state[ids[i - 1]] = ids[i]
+		state[ids[i-1]] = ids[i]
 	}
-	state[ids[len(ids) - 1]] = ids[0]
+	state[ids[len(ids)-1]] = ids[0]
 	current := ids[0]
 
 	max := 0
@@ -68,18 +68,18 @@ func main() {
 	}
 	fmt.Println("Part 1:", text)
 
-	for i := 10; i <= 1000 * 1000; i++ {
+	for i := 10; i <= 1000*1000; i++ {
 		ids = append(ids, i)
 	}
 	state = map[int]int{}
 	for i := 1; i < len(ids); i++ {
-		state[ids[i - 1]] = ids[i]
+		state[ids[i-1]] = ids[i]
 	}
-	state[ids[len(ids) - 1]] = ids[0]
+	state[ids[len(ids)-1]] = ids[0]
 	current = ids[0]
 	max = 1000 * 1000
 
-	for i := 0; i < 10 * 1000 * 1000; i++ {
+	for i := 0; i < 10*1000*1000; i++ {
 		move()
 	}
 	a := state[1]

@@ -12,25 +12,25 @@ func main() {
 	inputRegex := regexp.MustCompile(`^(\w)(\d+)$`)
 
 	// counterclockwise
-	dirX := []int{ 1, 0, -1,  0 }
-	dirY := []int{ 0, 1,  0, -1 }
+	dirX := []int{1, 0, -1, 0}
+	dirY := []int{0, 1, 0, -1}
 
 	currentDir := 0
 
 	posX := 0
 	posY := 0
 
-	move := func(dirname string, units int){
+	move := func(dirname string, units int) {
 		if dirname == "L" {
 			times := (units / 90) % 4
-			if currentDir + times > 3 {
+			if currentDir+times > 3 {
 				currentDir = currentDir + times - 4
 			} else {
 				currentDir = currentDir + times
 			}
 		} else if dirname == "R" {
 			times := (units / 90) % 4
-			if currentDir - times < 0 {
+			if currentDir-times < 0 {
 				currentDir = currentDir + 4 - times
 			} else {
 				currentDir = currentDir - times
@@ -61,7 +61,7 @@ func main() {
 	pX := 0
 	pY := 0
 
-	move2 := func(dirname string, units int){
+	move2 := func(dirname string, units int) {
 		if dirname == "F" {
 			pX += wpX * units
 			pY += wpY * units
@@ -114,4 +114,3 @@ func main() {
 	m2 := abs(pX) + abs(pY)
 	fmt.Println("Part 2:", m2)
 }
-

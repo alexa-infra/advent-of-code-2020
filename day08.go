@@ -1,11 +1,11 @@
 package main
 
 import (
-	"os"
 	"bufio"
+	"fmt"
+	"os"
 	"strconv"
 	"strings"
-	"fmt"
 )
 
 type code struct {
@@ -13,13 +13,13 @@ type code struct {
 	value int
 }
 
-type program []*code;
+type program []*code
 
 func newCode(txt string) *code {
 	parts := strings.Split(txt, " ")
 	op := parts[0]
 	value, _ := strconv.Atoi(parts[1])
-	return &code{ op: op, value: value}
+	return &code{op: op, value: value}
 }
 
 func (c *code) exec(pos int, acc int) (int, int) {
@@ -60,7 +60,7 @@ func main() {
 		prog = append(prog, newCode(line))
 	}
 	_, acc := prog.run()
-	fmt.Println("Part 1:", acc);
+	fmt.Println("Part 1:", acc)
 
 	for i, c := range prog {
 		var cc code
@@ -80,7 +80,7 @@ func main() {
 			p = append(p, prog[:i]...)
 		}
 		p = append(p, &cc)
-		if i + 1 < len(prog) {
+		if i+1 < len(prog) {
 			p = append(p, prog[i+1:]...)
 		}
 		exit, acc := p.run()

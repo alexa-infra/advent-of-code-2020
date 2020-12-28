@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"fmt"
+	"os"
 	"regexp"
 	"strconv"
 )
@@ -59,7 +59,7 @@ func resolveBrackets(expr expression, withPriority bool) expression {
 	for i, v := range expr {
 		if vv, ok := v.(string); ok && vv == "(" {
 			n := 0
-			for j := i+1; j<len(expr); j++ {
+			for j := i + 1; j < len(expr); j++ {
 				if vv, ok := expr[j].(string); ok && vv == "(" {
 					n++
 				}
@@ -67,7 +67,7 @@ func resolveBrackets(expr expression, withPriority bool) expression {
 					if n > 0 {
 						n--
 					} else {
-						inBrackets := expr[i + 1:j]
+						inBrackets := expr[i+1 : j]
 						value := solve(inBrackets, withPriority)
 						newExpr := expression{}
 						newExpr = append(newExpr, expr[:i]...)

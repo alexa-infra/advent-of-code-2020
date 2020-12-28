@@ -3,10 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"sort"
 	"strconv"
-	"math"
 )
 
 func pow(x, y int) int64 {
@@ -30,7 +30,7 @@ func main() {
 	for i, n := range numbers {
 		d := n
 		if i > 0 {
-			d = n - numbers[i - 1]
+			d = n - numbers[i-1]
 		}
 		v, ok := diff[d]
 		if ok {

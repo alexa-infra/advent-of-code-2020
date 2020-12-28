@@ -7,11 +7,11 @@ import (
 )
 
 func getDirX() []int {
-	return []int{ 0, 1, 1,  1,  0, -1, -1, -1}
+	return []int{0, 1, 1, 1, 0, -1, -1, -1}
 }
 
 func getDirY() []int {
-	return []int{ 1, 1, 0, -1, -1, -1,  0,  1}
+	return []int{1, 1, 0, -1, -1, -1, 0, 1}
 }
 
 func countAdj(data [][]rune, i, j, n int) int {
@@ -99,7 +99,7 @@ func main() {
 		row := []rune(line)
 		data = append(data, row)
 	}
-	orig_data := data
+	origData := data
 
 	n1 := 0
 	for {
@@ -118,7 +118,7 @@ func main() {
 	}
 	fmt.Println("Part 1:", n1)
 
-	data = orig_data
+	data = origData
 	n2 := 0
 	for {
 		ndata, n := step(data, 5, 100)

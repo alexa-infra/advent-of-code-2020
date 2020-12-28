@@ -20,15 +20,15 @@ func main() {
 	data2 := map[int64]int64{}
 
 	var writeFloating func(addr, mask, value int64)
-	writeFloating = func(addr, mask, value int64){
+	writeFloating = func(addr, mask, value int64) {
 		if mask == 0 {
 			data2[addr] = value
 			return
 		}
 		for i := 0; i < 36; i++ {
 			bit := int64(1 << (35 - i))
-			if bit & mask != 0 {
-				writeFloating(addr | bit, mask & ^bit, value)
+			if bit&mask != 0 {
+				writeFloating(addr|bit, mask & ^bit, value)
 				writeFloating(addr & ^bit, mask & ^bit, value)
 				return
 			}
@@ -60,7 +60,7 @@ func main() {
 		} else if opRegexp.MatchString(text) {
 			addr, _ := strconv.Atoi(opRegexp.ReplaceAllString(text, "$1"))
 			value, _ := strconv.Atoi(opRegexp.ReplaceAllString(text, "$2"))
-			data[addr] = int64(value) & maskAnd + fixed
+			data[addr] = int64(value)&maskAnd + fixed
 
 			addr2 := int64(addr) | maskOr
 			writeFloating(addr2, floating, int64(value))

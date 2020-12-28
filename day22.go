@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 	"strconv"
-	"fmt"
 )
 
 func game(deck1, deck2 []int) []int {
@@ -49,7 +49,7 @@ func game2(depth int, deck1, deck2 []int) ([]int, bool) {
 		player2 = player2[1:]
 		winner := card2 > card1
 		if len(player1) >= card1 && len(player2) >= card2 {
-			_, winner = game2(depth + 1, player1[:card1], player2[:card2])
+			_, winner = game2(depth+1, player1[:card1], player2[:card2])
 		}
 		if winner {
 			player2 = append(player2, card2)

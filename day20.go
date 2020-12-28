@@ -2,10 +2,10 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"fmt"
-	"strconv"
+	"os"
 	"regexp"
+	"strconv"
 )
 
 const (
@@ -21,9 +21,9 @@ type Tile struct {
 }
 
 type TilePos struct {
-	x    int
-	y    int
-	rf   int
+	x  int
+	y  int
+	rf int
 	*Tile
 }
 
@@ -49,7 +49,7 @@ func (t *Tile) Flip() {
 }
 
 func (t *Tile) Copy() *Tile {
-	tile := &Tile{ id: t.id }
+	tile := &Tile{id: t.id}
 	for j := 0; j < 10; j++ {
 		row := []rune{}
 		for i := 0; i < 10; i++ {
@@ -101,34 +101,34 @@ func (t *Tile) BorderBottom() int {
 }
 
 func (t *Tile) Borders() []int {
-	return []int{ t.BorderTop(), t.BorderRight(), t.BorderBottom(), t.BorderLeft() }
+	return []int{t.BorderTop(), t.BorderRight(), t.BorderBottom(), t.BorderLeft()}
 }
 
 func flip(v int) int {
 	rv := 0
 	for i := 0; i < 10; i++ {
 		bit := 1 << i
-		if v & bit == bit {
+		if v&bit == bit {
 			rv = rv | (1 << (9 - i))
 		}
 	}
 	return rv
 }
 
-func (tile *Tile) Orient() [][]int{
+func (tile *Tile) Orient() [][]int {
 	borders := tile.Borders()
 	t, r, b, l := borders[0], borders[1], borders[2], borders[3]
 	t1, r1, b1, l1 := flip(b), flip(r), flip(t), flip(l)
 	return [][]int{
-		{ t, r, b, l },
-		{ r, b, l, t },
-		{ b, l, t, r },
-		{ l, t, r, b },
+		{t, r, b, l},
+		{r, b, l, t},
+		{b, l, t, r},
+		{l, t, r, b},
 
-		{ t1, r1, b1, l1 },
-		{ r1, b1, l1, t1 },
-		{ b1, l1, t1, r1 },
-		{ l1, t1, r1, b1 },
+		{t1, r1, b1, l1},
+		{r1, b1, l1, t1},
+		{b1, l1, t1, r1},
+		{l1, t1, r1, b1},
 	}
 }
 
@@ -152,15 +152,15 @@ func solve(tiles []*Tile, initialOrient int) []TilePos {
 	aligned := []TilePos{}
 	notaligned := append([]*Tile{}, tiles...)
 
-	findAlignedByPos := func (x, y int) (TilePos, bool) {
+	findAlignedByPos := func(x, y int) (TilePos, bool) {
 		for _, pos := range aligned {
 			if pos.x == x && pos.y == y {
 				return pos, true
 			}
 		}
-		return TilePos{ 0, 0, 0, nil }, false
+		return TilePos{0, 0, 0, nil}, false
 	}
-	findAlignedBorder := func (x, y, d int) int {
+	findAlignedBorder := func(x, y, d int) int {
 		pos, found := findAlignedByPos(x, y)
 		if !found {
 			return -1
@@ -169,7 +169,7 @@ func solve(tiles []*Tile, initialOrient int) []TilePos {
 		borders := tile.Orient()[pos.rf]
 		return flip(borders[d])
 	}
-	findNotAligned := func (x, y, t, r, d, l int) []TilePos {
+	findNotAligned := func(x, y, t, r, d, l int) []TilePos {
 		rv := []TilePos{}
 		for _, tile := range notaligned {
 			for i, bb := range tile.Orient() {
@@ -190,9 +190,9 @@ func solve(tiles []*Tile, initialOrient int) []TilePos {
 		}
 		return rv
 	}
-	dx := []int{ -1, 1,  0, 0 }
-	dy := []int{  0, 0, -1, 1 }
-	alignTile := func (pos TilePos) {
+	dx := []int{-1, 1, 0, 0}
+	dy := []int{0, 0, -1, 1}
+	alignTile := func(pos TilePos) {
 		aligned = append(aligned, pos)
 		for i := 0; i < 4; i++ {
 			x := pos.x + dx[i]
@@ -210,7 +210,7 @@ func solve(tiles []*Tile, initialOrient int) []TilePos {
 		}
 	}
 
-	alignTile(TilePos{ 0, 0, initialOrient, notaligned[8] })
+	alignTile(TilePos{0, 0, initialOrient, notaligned[8]})
 	for len(queue) > 0 {
 		pos := queue[0]
 		queue = queue[1:]
@@ -259,13 +259,13 @@ func findCorners(aligned []TilePos) (int, int, int, int) {
 
 func findDragons(aligned []TilePos) (int, int) {
 
-	findAlignedByPos := func (x, y int) (TilePos, bool) {
+	findAlignedByPos := func(x, y int) (TilePos, bool) {
 		for _, pos := range aligned {
 			if pos.x == x && pos.y == y {
 				return pos, true
 			}
 		}
-		return TilePos{ 0, 0, 0, nil }, false
+		return TilePos{0, 0, 0, nil}, false
 	}
 
 	minx, maxx, miny, maxy := findCorners(aligned)
@@ -301,7 +301,7 @@ func findDragons(aligned []TilePos) (int, int) {
 		}
 	}
 	n2 := 0
-	for j := 1; j < len(lines) - 1; j++ {
+	for j := 1; j < len(lines)-1; j++ {
 		line1 := lines[j]
 
 		locations := draco1.FindAllStringIndex(line1, -1)
@@ -317,7 +317,7 @@ func findDragons(aligned []TilePos) (int, int) {
 			}
 		}
 	}
-	return nn - n2 * 15, n2
+	return nn - n2*15, n2
 }
 
 func main() {
@@ -334,7 +334,7 @@ func main() {
 		}
 		if inputRegex.MatchString(text) {
 			id, _ := strconv.Atoi(inputRegex.ReplaceAllString(text, "$1"))
-			currentTile = &Tile{ id: id, }
+			currentTile = &Tile{id: id}
 			tiles = append(tiles, currentTile)
 			continue
 		}
@@ -346,13 +346,13 @@ func main() {
 
 	aligned := solve(tiles, 0)
 
-	findAlignedByPos := func (x, y int) (TilePos, bool) {
+	findAlignedByPos := func(x, y int) (TilePos, bool) {
 		for _, pos := range aligned {
 			if pos.x == x && pos.y == y {
 				return pos, true
 			}
 		}
-		return TilePos{ 0, 0, 0, nil }, false
+		return TilePos{0, 0, 0, nil}, false
 	}
 
 	minx, maxx, miny, maxy := findCorners(aligned)

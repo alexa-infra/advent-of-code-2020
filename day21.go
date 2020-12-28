@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"strings"
 	"sort"
+	"strings"
 )
 
 func unique(list []string) []string {

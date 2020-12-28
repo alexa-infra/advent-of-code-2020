@@ -2,8 +2,8 @@ package main
 
 import (
 	"bufio"
-	"os"
 	"fmt"
+	"os"
 	"regexp"
 )
 
@@ -34,25 +34,25 @@ func main() {
 		} else if re0.MatchString(line) {
 			id := re0.ReplaceAllString(line, "$1")
 			v0 := re0.ReplaceAllString(line, "$2")
-			rule := Rule{ 0, v0, "", "", "", "" }
+			rule := Rule{0, v0, "", "", "", ""}
 			rules[id] = rule
 		} else if re1.MatchString(line) {
 			id := re1.ReplaceAllString(line, "$1")
 			v1 := re1.ReplaceAllString(line, "$2")
-			rule := Rule{ 1, "", v1, "", "", "" }
+			rule := Rule{1, "", v1, "", "", ""}
 			rules[id] = rule
 		} else if re2.MatchString(line) {
 			id := re2.ReplaceAllString(line, "$1")
 			v1 := re2.ReplaceAllString(line, "$2")
 			v2 := re2.ReplaceAllString(line, "$3")
-			rule := Rule{ 2, "", v1, v2, "", "" }
+			rule := Rule{2, "", v1, v2, "", ""}
 			rules[id] = rule
 		} else if re3.MatchString(line) {
 			id := re3.ReplaceAllString(line, "$1")
 			v1 := re3.ReplaceAllString(line, "$2")
 			v2 := re3.ReplaceAllString(line, "$3")
 			v3 := re3.ReplaceAllString(line, "$4")
-			rule := Rule{ 3, "", v1, v2, v3, "" }
+			rule := Rule{3, "", v1, v2, v3, ""}
 			rules[id] = rule
 		} else if re4.MatchString(line) {
 			id := re4.ReplaceAllString(line, "$1")
@@ -60,20 +60,20 @@ func main() {
 			v2 := re4.ReplaceAllString(line, "$3")
 			v3 := re4.ReplaceAllString(line, "$4")
 			v4 := re4.ReplaceAllString(line, "$5")
-			rule := Rule{ 4, "", v1, v2, v3, v4 }
+			rule := Rule{4, "", v1, v2, v3, v4}
 			rules[id] = rule
 		} else if re5.MatchString(line) {
 			id := re5.ReplaceAllString(line, "$1")
 			v1 := re5.ReplaceAllString(line, "$2")
 			v2 := re5.ReplaceAllString(line, "$3")
-			rule := Rule{ 5, "", v1, v2, "", "" }
+			rule := Rule{5, "", v1, v2, "", ""}
 			rules[id] = rule
 		} else {
 			panic("cant parse: " + line)
 		}
 	}
-	var buildRule func(id string)string
-	buildRule = func(id string)string{
+	var buildRule func(id string) string
+	buildRule = func(id string) string {
 		rule, ok := rules[id]
 		if !ok {
 			panic("rule not found " + id)
@@ -133,8 +133,8 @@ func main() {
 		lines = append(lines, line)
 	}
 	fmt.Println(n1)
-	rules["8"] = Rule{ 6, "", "42", "", "", "" }
-	rules["11"] = Rule{ 7, "", "42", "31", "", "" }
+	rules["8"] = Rule{6, "", "42", "", "", ""}
+	rules["11"] = Rule{7, "", "42", "31", "", ""}
 
 	regexpRule = buildRule("0")
 	re = regexp.MustCompile("^" + regexpRule + "$")
