@@ -39,13 +39,9 @@ func solveNoBrackets(expr expression, withPriority bool) int {
 				if expr[p].(string) == "+" {
 					result := solveNoBrackets(expr[p-1:p+2], false)
 					newExpr := expression{}
-					if p > 1 {
-						newExpr = append(newExpr, expr[:p-1]...)
-					}
+					newExpr = append(newExpr, expr[:p-1]...)
 					newExpr = append(newExpr, result)
-					if p + 2 < len(expr) {
-						newExpr = append(newExpr, expr[p+2:]...)
-					}
+					newExpr = append(newExpr, expr[p+2:]...)
 					return solveNoBrackets(newExpr, true)
 				}
 			}
@@ -71,8 +67,13 @@ func resolveBrackets(expr expression, withPriority bool) expression {
 					if n > 0 {
 						n--
 					} else {
-						value := solve(expr[i + 1:j], withPriority)
-						return append(append(expr[:i], value), expr[j+1:]...)
+						inBrackets := expr[i + 1:j]
+						value := solve(inBrackets, withPriority)
+						newExpr := expression{}
+						newExpr = append(newExpr, expr[:i]...)
+						newExpr = append(newExpr, value)
+						newExpr = append(newExpr, expr[j+1:]...)
+						return newExpr
 					}
 				}
 			}
@@ -133,7 +134,6 @@ func main() {
 		result := solve(expr, false)
 		n1 += result
 
-		expr = convertExpr(parts)
 		result = solve(expr, true)
 		n2 += result
 	}
